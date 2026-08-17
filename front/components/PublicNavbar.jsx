@@ -19,7 +19,7 @@ export default function PublicNavbar() {
             <Link
               key={href}
               href={href}
-              className={active ? 'text-violet-700 underline underline-offset-4' : 'text-gray-500 hover:text-violet-600'}
+              className={active ? 'text-violet-500 underline underline-offset-4' : 'text-gray-500 hover:text-violet-600'}
             >
               {label}
             </Link>

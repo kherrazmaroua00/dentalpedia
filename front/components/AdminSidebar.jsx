@@ -26,7 +26,7 @@ export default function AdminSidebar() {
   return (
     <aside className="w-64 min-h-screen bg-violet-50/40 border-r border-violet-100 flex flex-col px-4 py-6">
       <div className="px-2 mb-8">
-        <h1 className="text-xl font-bold text-violet-700">Dentalpedia</h1>
+        <h1 className="text-xl font-bold text-violet-500">Dentalpedia</h1>
         <p className="text-xs tracking-widest text-gray-400 font-semibold mt-0.5">PORTAIL ADMIN</p>
       </div>
 
@@ -38,7 +38,7 @@ export default function AdminSidebar() {
               key={href}
               href={href}
               className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition ${
-                active ? 'bg-violet-600 text-white shadow-sm' : 'text-gray-600 hover:bg-violet-100'
+                active ? 'bg-violet-500 text-white shadow-sm' : 'text-gray-600 hover:bg-violet-100'
               }`}
             >
               <Icon className="w-5 h-5" />

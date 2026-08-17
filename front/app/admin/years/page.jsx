@@ -70,7 +70,7 @@ export default function YearsPage() {
         </div>
         <button
           onClick={openCreate}
-          className="flex items-center gap-2 bg-violet-700 hover:bg-violet-800 text-white font-medium px-5 py-3 rounded-xl transition shrink-0"
+          className="flex items-center gap-2 bg-violet-500 hover:bg-violet-600 text-white font-medium px-5 py-3 rounded-xl transition shrink-0"
         >
           <Plus className="w-4 h-4" />
           Ajouter une année

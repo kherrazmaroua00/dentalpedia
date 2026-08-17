@@ -82,7 +82,7 @@ export default function YearModal({ open, onClose, onSubmit, initialData }) {
           <button
             onClick={handleSubmit}
             disabled={saving || !academicYear.trim()}
-            className="px-5 py-2.5 rounded-xl bg-violet-700 hover:bg-violet-800 disabled:opacity-60 text-white font-medium transition"
+            className="px-5 py-2.5 rounded-xl bg-violet-500 hover:bg-violet-600 disabled:opacity-60 text-white font-medium transition"
           >
             {saving ? 'Enregistrement...' : initialData ? 'Enregistrer' : "Créer l'année"}
           </button>

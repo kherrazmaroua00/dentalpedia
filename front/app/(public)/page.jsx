@@ -22,7 +22,7 @@ export default function HomePage() {
     <div className="pb-10">
       <section className="flex flex-col md:flex-row items-center gap-8 md:gap-12 py-6 md:py-8">
         <div className="flex-1 max-w-[560px]">
-          <span className="inline-block text-[11px] font-semibold tracking-[0.14em] text-violet-600 uppercase bg-violet-50 px-3 py-2 rounded-[05px] border border-violet-200 mb-5">
+          <span className="inline-block text-[11px] font-semibold tracking-[0.14em] text-white-600 uppercase bg-violet-50 px-3 py-2 rounded-[05px] border border-violet-200 mb-5">
             Plateforme Éducative
           </span>
           <h1 className="text-[38px] md:text-[42px] leading-[1.05] font-bold text-slate-600 mb-5">
@@ -58,7 +58,7 @@ export default function HomePage() {
           <p className="text-sm text-slate-400">Aucune année créée pour le moment.</p>
         ) : (
           <div className="relative">
-            <div className="absolute left-4 top-10 bottom-10 w-0.5 bg-violet-100 z-0" />
+            <div className="absolute left-4 top-10 bottom-10 w-1 bg-violet-200 z-0" />
             {years.map((year, i) => (
               <YearAccordionItem
                 key={year.id}

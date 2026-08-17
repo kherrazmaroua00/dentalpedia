@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { User, Lock, Save } from 'lucide-react';
+import { User, Lock, Mail, Save } from 'lucide-react';
 import { apiFetch } from '@/lib/api';
 import AdminLayout from '@/components/AdminLayout';
 
@@ -12,6 +12,16 @@ export default function SettingsPage() {
   const [email, setEmail] = useState('');
   const [profileMsg, setProfileMsg] = useState('');
   const [savingProfile, setSavingProfile] = useState(false);
+
+  const [newEmail, setNewEmail] = useState('');
+  const [emailPassword, setEmailPassword] = useState('');
+  const [emailMsg, setEmailMsg] = useState('');
+  const [emailErr, setEmailErr] = useState('');
+  const [savingEmail, setSavingEmail] = useState(false);
+
+  const [recoveryEmail, setRecoveryEmail] = useState('');
+  const [recoveryMsg, setRecoveryMsg] = useState('');
+  const [savingRecovery, setSavingRecovery] = useState(false);
 
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -26,6 +36,7 @@ export default function SettingsPage() {
       setBio(admin.bio || '');
       setAvatarUrl(admin.avatarUrl || '');
       setEmail(admin.email);
+      setRecoveryEmail(admin.recoveryEmail || '');
     });
   }, []);
 
@@ -39,6 +50,40 @@ export default function SettingsPage() {
       setProfileMsg(err.message);
     } finally {
       setSavingProfile(false);
+    }
+  }
+
+  async function handleEmailChange() {
+    setEmailErr('');
+    setEmailMsg('');
+    setSavingEmail(true);
+    try {
+      const updated = await apiFetch('/api/auth/email', {
+        method: 'PUT',
+        body: JSON.stringify({ newEmail, password: emailPassword }),
+      });
+      setEmail(updated.email);
+      setNewEmail('');
+      setEmailPassword('');
+      setEmailMsg('Email mis à jour.');
+    } catch (err) {
+      setEmailErr(err.message);
+    } finally {
+      setSavingEmail(false);
+    }
+  }
+
+  async function handleRecoveryEmailSave() {
+    setSavingRecovery(true);
+    setRecoveryMsg('');
+    try {
+      await apiFetch('/api/auth/recovery-email', {
+        method: 'PUT',
+        body: JSON.stringify({ recoveryEmail }),
+      });
+      setRecoveryMsg('Email de récupération mis à jour.');
+    } finally {
+      setSavingRecovery(false);
     }
   }
 
@@ -77,7 +122,7 @@ export default function SettingsPage() {
 
           <div className="space-y-4">
             <div>
-              <label className="block text-xs font-semibold text-gray-500 mb-1.5">EMAIL</label>
+              <label className="block text-xs font-semibold text-gray-500 mb-1.5">EMAIL ACTUEL</label>
               <input value={email} disabled className="w-full px-4 py-2.5 rounded-xl bg-gray-50 text-sm text-gray-400" />
             </div>
             <div>
@@ -119,50 +164,110 @@ export default function SettingsPage() {
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl border border-violet-100 p-6">
-          <h2 className="flex items-center gap-2 text-lg font-bold text-gray-800 mb-5">
-            <Lock className="w-5 h-5 text-violet-600" /> Sécurité
-          </h2>
+        <div className="space-y-6">
+          <div className="bg-white rounded-2xl border border-violet-100 p-6">
+            <h2 className="flex items-center gap-2 text-lg font-bold text-gray-800 mb-5">
+              <Mail className="w-5 h-5 text-violet-600" /> Email
+            </h2>
 
-          <div className="space-y-4">
-            <div>
-              <label className="block text-xs font-semibold text-gray-500 mb-1.5">MOT DE PASSE ACTUEL</label>
-              <input
-                type="password"
-                value={currentPassword}
-                onChange={(e) => setCurrentPassword(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl bg-violet-50 outline-none text-sm text-gray-900"
-              />
-            </div>
-            <div>
-              <label className="block text-xs font-semibold text-gray-500 mb-1.5">NOUVEAU MOT DE PASSE</label>
-              <input
-                type="password"
-                value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl bg-violet-50 outline-none text-sm text-gray-900"
-              />
-            </div>
-            <div>
-              <label className="block text-xs font-semibold text-gray-500 mb-1.5">CONFIRMER LE NOUVEAU MOT DE PASSE</label>
-              <input
-                type="password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl bg-violet-50 outline-none text-sm text-gray-900"
-              />
-            </div>
+            <div className="space-y-4">
+              <div className="border-b border-gray-100 pb-4">
+                <p className="text-xs font-semibold text-gray-500 mb-2">CHANGER D'EMAIL</p>
+                <input
+                  type="email"
+                  value={newEmail}
+                  onChange={(e) => setNewEmail(e.target.value)}
+                  placeholder="Nouvel email"
+                  className="w-full px-4 py-2.5 rounded-xl bg-violet-50 outline-none text-sm text-gray-900 placeholder-gray-400 mb-2"
+                />
+                <input
+                  type="password"
+                  value={emailPassword}
+                  onChange={(e) => setEmailPassword(e.target.value)}
+                  placeholder="Mot de passe actuel (confirmation)"
+                  className="w-full px-4 py-2.5 rounded-xl bg-violet-50 outline-none text-sm text-gray-900 placeholder-gray-400 mb-2"
+                />
+                {emailErr && <p className="text-sm text-red-600 mb-2">{emailErr}</p>}
+                <button
+                  onClick={handleEmailChange}
+                  disabled={savingEmail || !newEmail || !emailPassword}
+                  className="text-sm bg-violet-700 hover:bg-violet-800 disabled:opacity-60 text-white font-medium px-4 py-2 rounded-lg transition"
+                >
+                  {savingEmail ? 'Mise à jour...' : "Changer l'email"}
+                </button>
+              </div>
 
-            {passwordErr && <p className="text-sm text-red-600">{passwordErr}</p>}
-            {passwordMsg && <p className="text-sm text-violet-600">{passwordMsg}</p>}
+              <div>
+                <label className="block text-xs font-semibold text-gray-500 mb-1.5">EMAIL DE RÉCUPÉRATION (optionnel)</label>
+                <input
+                  type="email"
+                  value={recoveryEmail}
+                  onChange={(e) => setRecoveryEmail(e.target.value)}
+                  placeholder="email-secondaire@exemple.com"
+                  className="w-full px-4 py-2.5 rounded-xl bg-violet-50 outline-none text-sm text-gray-900 placeholder-gray-400 mb-2"
+                />
+                <p className="text-xs text-gray-400 mb-2">
+                  Utilisé uniquement pour la réinitialisation du mot de passe si vous perdez l'accès à votre email principal.
+                </p>
+                <button
+                  onClick={handleRecoveryEmailSave}
+                  disabled={savingRecovery}
+                  className="text-sm bg-white border border-violet-200 hover:bg-violet-50 disabled:opacity-60 text-violet-700 font-medium px-4 py-2 rounded-lg transition"
+                >
+                  {savingRecovery ? 'Enregistrement...' : 'Enregistrer'}
+                </button>
+                {(emailMsg || recoveryMsg) && (
+                  <p className="text-sm text-violet-600 mt-2">{emailMsg || recoveryMsg}</p>
+                )}
+              </div>
+            </div>
+          </div>
 
-            <button
-              onClick={handlePasswordSave}
-              disabled={savingPassword}
-              className="flex items-center gap-2 bg-violet-700 hover:bg-violet-800 disabled:opacity-60 text-white font-medium px-5 py-2.5 rounded-xl transition"
-            >
-              <Save className="w-4 h-4" /> {savingPassword ? 'Enregistrement...' : 'Changer le mot de passe'}
-            </button>
+          <div className="bg-white rounded-2xl border border-violet-100 p-6">
+            <h2 className="flex items-center gap-2 text-lg font-bold text-gray-800 mb-5">
+              <Lock className="w-5 h-5 text-violet-600" /> Sécurité
+            </h2>
+
+            <div className="space-y-4">
+              <div>
+                <label className="block text-xs font-semibold text-gray-500 mb-1.5">MOT DE PASSE ACTUEL</label>
+                <input
+                  type="password"
+                  value={currentPassword}
+                  onChange={(e) => setCurrentPassword(e.target.value)}
+                  className="w-full px-4 py-2.5 rounded-xl bg-violet-50 outline-none text-sm text-gray-900"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-semibold text-gray-500 mb-1.5">NOUVEAU MOT DE PASSE</label>
+                <input
+                  type="password"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  className="w-full px-4 py-2.5 rounded-xl bg-violet-50 outline-none text-sm text-gray-900"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-semibold text-gray-500 mb-1.5">CONFIRMER LE NOUVEAU MOT DE PASSE</label>
+                <input
+                  type="password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className="w-full px-4 py-2.5 rounded-xl bg-violet-50 outline-none text-sm text-gray-900"
+                />
+              </div>
+
+              {passwordErr && <p className="text-sm text-red-600">{passwordErr}</p>}
+              {passwordMsg && <p className="text-sm text-violet-600">{passwordMsg}</p>}
+
+              <button
+                onClick={handlePasswordSave}
+                disabled={savingPassword}
+                className="flex items-center gap-2 bg-violet-700 hover:bg-violet-800 disabled:opacity-60 text-white font-medium px-5 py-2.5 rounded-xl transition"
+              >
+                <Save className="w-4 h-4" /> {savingPassword ? 'Enregistrement...' : 'Changer le mot de passe'}
+              </button>
+            </div>
           </div>
         </div>
       </div>

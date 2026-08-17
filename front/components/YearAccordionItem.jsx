@@ -3,12 +3,12 @@ import { ChevronDown, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import YearProgressBar from './YearProgressBar';
 
-const badgeColors = ['bg-violet-500', 'bg-emerald-500', 'bg-rose-400', 'bg-violet-400', 'bg-pink-300', 'bg-amber-300'];
+const badgeColors = ['bg-violet-500', 'bg-emerald-300', 'bg-rose-200', 'bg-violet-200', 'bg-pink-200', 'bg-amber-200'];
 
 export default function YearAccordionItem({ year, index, expanded, onToggle, modules, loadingModules }) {
   return (
     <div className="relative pl-14">
-      <div className={`absolute left-0 top-6 w-10 h-10 rounded-[5px] flex items-center justify-center text-white text-sm font-bold ${badgeColors[index % badgeColors.length]}`}>
+      <div className={`absolute left-0 top-6 w-12 h-12 rounded-[5px] flex items-center justify-center text-white text-sm font-bold ${badgeColors[index % badgeColors.length]}`}>
         {index + 1}
       </div>
 

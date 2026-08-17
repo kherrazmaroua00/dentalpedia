@@ -42,15 +42,23 @@ export default function ModulePublicPage() {
         <div>
           <div className="flex flex-wrap items-center gap-2 mb-4">
             <span className="inline-flex items-center gap-1.5 text-xs font-medium text-violet-500 bg-white px-4 py-3 rounded-full">
-              {module.year.academicYear}
+              {module.year.academicYear} 
             </span>
+          </div>
+          <div className="flex items-center gap-3 mb-3">
+            <h1 className="text-3xl font-bold text-gray-900">{module.name}</h1>
+            {module.semester && (
+              <span className="text-sm font-medium text-green-600 bg-green-50 px-3 py-1 rounded-full">
+                S{module.semester}
+              </span>
+            )}
             {module.coefficient !== null && module.coefficient !== undefined && (
-              <span className="inline-flex items-center gap-1.5 text-xs font-medium text-gray-500  px-2 py-3 rounded-full">
-                Coefficient: {module.coefficient}
+              <span className="text-sm font-medium text-blue-600 bg-blue-50 px-3 py-1 rounded-full">
+                Coef: {module.coefficient}
               </span>
             )}
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-3">{module.name}</h1>
+          
           {module.description ? (
             <p className="text-gray-600 text-sm max-w-2xl leading-relaxed mb-3">{module.description}</p>
           ) : (
@@ -58,6 +66,7 @@ export default function ModulePublicPage() {
               Retrouvez tous les supports, cours et ressources de {module.name} au même endroit.
             </p>
           )}
+          
         </div>
         {module.driveUrl && (
           <a

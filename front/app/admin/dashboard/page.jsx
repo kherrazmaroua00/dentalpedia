@@ -69,7 +69,7 @@ export default function DashboardPage() {
             <div className="lg:col-span-2">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-xl font-bold text-gray-800">Années d'études</h2>
-                <Link href="/admin/years" className="text-violet-600 text-sm font-medium flex items-center gap-1 hover:underline">
+                <Link href="/admin/years" className="text-violet-500 text-sm font-medium flex items-center gap-1 hover:underline">
                   Voir tout <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </div>

@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation';
 import { Mail, Lock, Eye, EyeOff, ShieldCheck, ArrowRight } from 'lucide-react';
 import { apiFetch } from '@/lib/api';
 import AdminFooter from '@/components/AdminFooter';
+import Link from 'next/link';
+
 
 export default function LoginPage() {
   const router = useRouter();
@@ -40,7 +42,7 @@ export default function LoginPage() {
             <div className="w-16 h-16 rounded-full bg-violet-100 flex items-center justify-center mb-4">
               <span className="text-3xl">🦷</span>
             </div>
-            <h1 className="text-2xl font-bold text-violet-700">Dentalpedia Admin</h1>
+            <h1 className="text-2xl font-bold text-violet-500">Dentalpedia Admin</h1>
             <p className="text-gray-500 mt-2 text-sm">
               Veuillez vous authentifier pour accéder au tableau de bord.
             </p>
@@ -71,7 +73,7 @@ export default function LoginPage() {
             <div>
               <div className="flex justify-between items-center mb-1">
                 <label className="block text-sm font-medium text-gray-700">Mot de passe</label>
-                <a href="#" className="text-sm text-violet-600 hover:underline">Oublié ?</a>
+                <Link href="/admin/forgot-password" className="text-sm text-violet-600 hover:underline">Oublié ?</Link>
               </div>
               <div className="relative">
                 <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -106,7 +108,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-violet-600 hover:bg-violet-700 disabled:opacity-60 text-white font-semibold py-3 rounded-xl transition flex items-center justify-center gap-2"
+              className="w-full bg-violet-500 hover:bg-violet-700 disabled:opacity-60 text-white font-semibold py-3 rounded-xl transition flex items-center justify-center gap-2"
             >
               {loading ? 'Connexion...' : (
                 <>

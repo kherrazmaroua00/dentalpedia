@@ -3,7 +3,7 @@ import { timeAgo } from '@/lib/time';
 
 const palette = [
   'bg-emerald-100 text-emerald-600',
-  'bg-violet-100 text-violet-600',
+  'bg-violet-100 text-violet-500',
   'bg-rose-100 text-rose-600',
   'bg-sky-100 text-sky-600',
 ];

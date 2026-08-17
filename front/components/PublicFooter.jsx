@@ -15,7 +15,7 @@ export default function PublicFooter() {
         <p className="text-gray-500 text-xs mb-4">Aidez vos pairs en contribuant à notre bibliothèque grandissante.</p>
         <a
           href="mailto:chahinezbenkeltoum20@gmail.com"
-          className="inline-block bg-violet-500 hover:bg-violet-800 text-white text-xs font-medium px-4 py-2.5 rounded-xl transition"
+          className="inline-block bg-violet-500 hover:bg-violet-600 text-white text-xs font-medium px-4 py-2.5 rounded-xl transition"
         >
           Contacter l'Admin
         </a>

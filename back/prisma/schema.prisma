@@ -10,12 +10,21 @@ datasource db {
 model Admin {
   id           String   @id @default(cuid())
   email        String   @unique
+  recoveryEmail String?
   passwordHash String
   name         String
   bio          String?
   avatarUrl    String?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+}
+
+model PasswordReset {
+  id        String   @id @default(cuid())
+  adminId   String
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
 }
 
 model Year {
