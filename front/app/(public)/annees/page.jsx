@@ -35,7 +35,7 @@ export default function AnneesPage() {
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-10">
-      <h1 className="text-3xl font-bold text-gray-900 mb-8">Toutes les années</h1>
+      <h1 className="text-3xl font-bold text-gray-500 mb-8">Toutes les années</h1>
       <YearsTimeline>
         {years.map((year, i) => (
           <YearAccordionItem

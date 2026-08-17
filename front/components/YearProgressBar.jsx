@@ -4,7 +4,7 @@ export default function YearProgressBar({ theoryPercentage }) {
       <div className="flex justify-between text-[11px] text-gray-400 mb-1">
         <span>Répartition Pédagogique</span>
         <span>
-          {theoryPercentage}% Théorie{theoryPercentage < 100 ? ` / ${100 - theoryPercentage}% Clinique` : ''}
+          {theoryPercentage}% Théorie{theoryPercentage < 100 ? ` / ${100 - theoryPercentage}% Pre-clinique/Clinique` : ''}
         </span>
       </div>
       <div className="h-3 rounded-full bg-emerald-200 overflow-hidden">

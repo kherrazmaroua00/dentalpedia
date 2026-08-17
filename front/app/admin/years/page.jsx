@@ -65,7 +65,7 @@ export default function YearsPage() {
     <AdminLayout>
       <div className="flex items-start justify-between mb-8">
         <div>
-          <h1 className="text-4xl font-bold text-gray-900 mb-1">Années d'études</h1>
+          <h1 className="text-5xl font-bold text-gray-500 mb-1">Années d'études</h1>
           <p className="text-gray-500">Sélectionnez une année pour gérer ses modules académiques.</p>
         </div>
         <button

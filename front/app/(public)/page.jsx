@@ -48,7 +48,7 @@ export default function HomePage() {
           <h2 className="text-[42px] md:text-[42px] leading-none font-bold text-slate-600">Années d'études</h2>
           <div className="flex items-center gap-5 text-[12px] text-slate-500 border border-slate-200 rounded-[15px] px-4 py-2 bg-white">
             <span className="inline-flex items-center gap-2"><span className="w-2.5 h-2.5 rounded-full bg-violet-500" />Théorie</span>
-            <span className="inline-flex items-center gap-2"><span className="w-2.5 h-2.5 rounded-full bg-emerald-400" />Clinique</span>
+            <span className="inline-flex items-center gap-2"><span className="w-2.5 h-2.5 rounded-full bg-emerald-400" />pre-clinique/Clinique</span>
           </div>
         </div>
 

@@ -115,7 +115,7 @@ export default function SettingsPage() {
 
   return (
     <AdminLayout>
-      <h1 className="text-4xl font-bold text-gray-500 mb-1">Paramètres</h1>
+      <h1 className="text-5xl font-bold text-gray-500 mb-1">Paramètres</h1>
       <p className="text-gray-500 mb-8">Gérez votre profil et votre sécurité.</p>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

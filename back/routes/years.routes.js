@@ -7,7 +7,7 @@ router.get('/', async (req, res) => {
   const years = await prisma.year.findMany({
     orderBy: { order: 'asc' },
     include: {
-      modules: { select: { id: true, name: true }, orderBy: { createdAt: 'asc' } },
+      modules: { select: { id: true, name: true, semester: true }, orderBy: { createdAt: 'asc' } },
       _count: { select: { modules: true } },
     },
   });

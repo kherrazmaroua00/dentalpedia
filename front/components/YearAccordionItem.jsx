@@ -5,7 +5,26 @@ import YearProgressBar from './YearProgressBar';
 
 const badgeColors = ['bg-violet-500', 'bg-emerald-300', 'bg-rose-200', 'bg-violet-200', 'bg-pink-200', 'bg-amber-200'];
 
+function ModuleLink({ yearId, module }) {
+  return (
+    <Link
+      href={`/annees/${yearId}/module/${module.id}`}
+      className="flex items-center justify-between text-sm border border-violet-200 rounded-lg text-gray-900 hover:text-violet-700 p-4"
+    >
+      <span className="flex items-center gap-2">
+        <span className="w-1.5 h-1.5 rounded-full bg-violet-500" />
+        {module.name}
+      </span>
+      <ChevronRight className="w-6 h-6 text-gray-500" />
+    </Link>
+  );
+}
+
 export default function YearAccordionItem({ year, index, expanded, onToggle, modules, loadingModules }) {
+  const semester1 = modules.filter((m) => m.semester === 1);
+  const semester2 = modules.filter((m) => m.semester === 2);
+  const noSemester = modules.filter((m) => m.semester !== 1 && m.semester !== 2);
+
   return (
     <div className="relative pl-14">
       <div className={`absolute left-0 top-6 w-12 h-12 rounded-[5px] flex items-center justify-center text-white text-sm font-bold ${badgeColors[index % badgeColors.length]}`}>
@@ -38,20 +57,28 @@ export default function YearAccordionItem({ year, index, expanded, onToggle, mod
             ) : modules.length === 0 ? (
               <p className="text-xs text-gray-400">Aucun module pour cette année.</p>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6  p-4 gap-y-2">
-                {modules.map((m) => (
-                  <Link
-                    key={m.id}
-                    href={`/annees/${year.id}/module/${m.id}`}
-                    className="flex items-center justify-between text-sm  border border-violet-200 rounded-lg text-gray-900 hover:text-violet-700 p-4"
-                  >
-                    <span className="flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-violet-500" />
-                      {m.name}
-                    </span>
-                    <ChevronRight className="w-6 h-6 text-gray-500" />
-                  </Link>
-                ))}
+              <div className="space-y-5">
+                {semester1.length > 0 && (
+                  <div>
+                    <p className="text-xs font-semibold text-violet-500 mb-2">S1 Module :</p>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2">
+                      {semester1.map((m) => <ModuleLink key={m.id} yearId={year.id} module={m} />)}
+                    </div>
+                  </div>
+                )}
+                {semester2.length > 0 && (
+                  <div>
+                    <p className="text-xs font-semibold text-violet-500 mb-2">S2 Module :</p>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2">
+                      {semester2.map((m) => <ModuleLink key={m.id} yearId={year.id} module={m} />)}
+                    </div>
+                  </div>
+                )}
+                {noSemester.length > 0 && (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2">
+                    {noSemester.map((m) => <ModuleLink key={m.id} yearId={year.id} module={m} />)}
+                  </div>
+                )}
               </div>
             )}
           </div>

@@ -27,7 +27,7 @@ export default function DashboardPage() {
 
   return (
     <AdminLayout>
-      <h1 className="text-4xl font-bold text-gray-900 mb-1">Bonjour</h1>
+      <h1 className="text-5xl font-bold text-gray-500 mb-1">Bonjour</h1>
       <p className="text-gray-500 mb-8">Gérez vos ressources Dentalpedia.</p>
 
       {loading ? (
@@ -68,7 +68,7 @@ export default function DashboardPage() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-xl font-bold text-gray-800">Années d'études</h2>
+                <h2 className="text-xl font-bold text-gray-500">Années d'études</h2>
                 <Link href="/admin/years" className="text-violet-500 text-sm font-medium flex items-center gap-1 hover:underline">
                   Voir tout <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
@@ -79,7 +79,7 @@ export default function DashboardPage() {
             </div>
 
             <div>
-              <h2 className="text-xl font-bold text-gray-800 mb-4">Modules récemment ajoutés</h2>
+              <h2 className="text-xl font-bold text-gray-500 mb-4">Modules récemment ajoutés</h2>
               <div className="bg-white rounded-2xl border border-violet-100 p-5 shadow-sm shadow-violet-50"> 
                 {stats.recentModules.length === 0 ? (
                   <p className="text-sm text-gray-400">Aucun module pour le moment.</p>
