@@ -7,6 +7,12 @@ const { signToken } = require('../utils/jwt');
 const { sendResetEmail } = require('../utils/mailer');
 const requireAuth = require('../middleware/auth.middleware');
 
+const cookieOptions = {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === 'production',
+  sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+};
+
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
@@ -19,33 +25,31 @@ router.post('/login', async (req, res) => {
 
   const token = signToken({ id: admin.id });
   res.cookie('token', token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax',
+    ...cookieOptions,
     maxAge: 7 * 24 * 60 * 60 * 1000,
   });
   res.json({ id: admin.id, email: admin.email, name: admin.name });
 });
 
 router.post('/logout', (req, res) => {
-  res.clearCookie('token');
+  res.clearCookie('token', cookieOptions);
   res.json({ message: 'Déconnecté' });
 });
 
 router.get('/me', requireAuth, async (req, res) => {
   const admin = await prisma.admin.findUnique({
     where: { id: req.adminId },
-    select: { id: true, email: true, recoveryEmail: true, name: true, bio: true, avatarUrl: true, instagram: true, telegram: true },
+    select: { id: true, email: true, recoveryEmail: true, name: true, bio: true, avatarUrl: true },
   });
   res.json(admin);
 });
 
 router.put('/me', requireAuth, async (req, res) => {
-  const { name, bio, avatarUrl, instagram, telegram } = req.body;
+  const { name, bio, avatarUrl } = req.body;
   const admin = await prisma.admin.update({
     where: { id: req.adminId },
-    data: { name, bio, avatarUrl, instagram, telegram },
-    select: { id: true, email: true, recoveryEmail: true, name: true, bio: true, avatarUrl: true, instagram: true, telegram: true },
+    data: { name, bio, avatarUrl },
+    select: { id: true, email: true, recoveryEmail: true, name: true, bio: true, avatarUrl: true },
   });
   res.json(admin);
 });
@@ -66,7 +70,7 @@ router.put('/email', requireAuth, async (req, res) => {
   const updated = await prisma.admin.update({
     where: { id: req.adminId },
     data: { email: newEmail },
-    select: { id: true, email: true, recoveryEmail: true, name: true, bio: true, avatarUrl: true, instagram: true, telegram: true },
+    select: { id: true, email: true, recoveryEmail: true, name: true, bio: true, avatarUrl: true },
   });
   res.json(updated);
 });
@@ -76,7 +80,7 @@ router.put('/recovery-email', requireAuth, async (req, res) => {
   const admin = await prisma.admin.update({
     where: { id: req.adminId },
     data: { recoveryEmail: recoveryEmail || null },
-    select: { id: true, email: true, recoveryEmail: true, name: true, bio: true, avatarUrl: true, instagram: true, telegram: true },
+    select: { id: true, email: true, recoveryEmail: true, name: true, bio: true, avatarUrl: true },
   });
   res.json(admin);
 });
