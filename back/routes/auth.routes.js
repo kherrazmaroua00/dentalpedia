@@ -35,17 +35,17 @@ router.post('/logout', (req, res) => {
 router.get('/me', requireAuth, async (req, res) => {
   const admin = await prisma.admin.findUnique({
     where: { id: req.adminId },
-    select: { id: true, email: true, recoveryEmail: true, name: true, bio: true, avatarUrl: true },
+    select: { id: true, email: true, recoveryEmail: true, name: true, bio: true, avatarUrl: true, instagram: true, telegram: true },
   });
   res.json(admin);
 });
 
 router.put('/me', requireAuth, async (req, res) => {
-  const { name, bio, avatarUrl } = req.body;
+  const { name, bio, avatarUrl, instagram, telegram } = req.body;
   const admin = await prisma.admin.update({
     where: { id: req.adminId },
-    data: { name, bio, avatarUrl },
-    select: { id: true, email: true, recoveryEmail: true, name: true, bio: true, avatarUrl: true },
+    data: { name, bio, avatarUrl, instagram, telegram },
+    select: { id: true, email: true, recoveryEmail: true, name: true, bio: true, avatarUrl: true, instagram: true, telegram: true },
   });
   res.json(admin);
 });
@@ -66,7 +66,7 @@ router.put('/email', requireAuth, async (req, res) => {
   const updated = await prisma.admin.update({
     where: { id: req.adminId },
     data: { email: newEmail },
-    select: { id: true, email: true, recoveryEmail: true, name: true, bio: true, avatarUrl: true },
+    select: { id: true, email: true, recoveryEmail: true, name: true, bio: true, avatarUrl: true, instagram: true, telegram: true },
   });
   res.json(updated);
 });
@@ -76,7 +76,7 @@ router.put('/recovery-email', requireAuth, async (req, res) => {
   const admin = await prisma.admin.update({
     where: { id: req.adminId },
     data: { recoveryEmail: recoveryEmail || null },
-    select: { id: true, email: true, recoveryEmail: true, name: true, bio: true, avatarUrl: true },
+    select: { id: true, email: true, recoveryEmail: true, name: true, bio: true, avatarUrl: true, instagram: true, telegram: true },
   });
   res.json(admin);
 });

@@ -47,4 +47,11 @@ router.get('/stats', requireAuth, async (req, res) => {
   });
 });
 
+router.get('/admin', async (req, res) => {
+  const admin = await prisma.admin.findFirst({
+    select: { id: true, name: true, email: true, bio: true, avatarUrl: true, instagram: true, telegram: true },
+  });
+  res.json(admin || {});
+});
+
 module.exports = router;

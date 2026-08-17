@@ -9,6 +9,8 @@ export default function SettingsPage() {
   const [name, setName] = useState('');
   const [bio, setBio] = useState('');
   const [avatarUrl, setAvatarUrl] = useState('');
+  const [instagram, setInstagram] = useState('');
+  const [telegram, setTelegram] = useState('');
   const [email, setEmail] = useState('');
   const [profileMsg, setProfileMsg] = useState('');
   const [savingProfile, setSavingProfile] = useState(false);
@@ -35,6 +37,8 @@ export default function SettingsPage() {
       setName(admin.name || '');
       setBio(admin.bio || '');
       setAvatarUrl(admin.avatarUrl || '');
+      setInstagram(admin.instagram || '');
+      setTelegram(admin.telegram || '');
       setEmail(admin.email);
       setRecoveryEmail(admin.recoveryEmail || '');
     });
@@ -44,7 +48,7 @@ export default function SettingsPage() {
     setSavingProfile(true);
     setProfileMsg('');
     try {
-      await apiFetch('/api/auth/me', { method: 'PUT', body: JSON.stringify({ name, bio, avatarUrl }) });
+      await apiFetch('/api/auth/me', { method: 'PUT', body: JSON.stringify({ name, bio, avatarUrl, instagram, telegram }) });
       setProfileMsg('Profil mis à jour.');
     } catch (err) {
       setProfileMsg(err.message);
@@ -111,13 +115,13 @@ export default function SettingsPage() {
 
   return (
     <AdminLayout>
-      <h1 className="text-4xl font-bold text-gray-900 mb-1">Paramètres</h1>
+      <h1 className="text-4xl font-bold text-gray-500 mb-1">Paramètres</h1>
       <p className="text-gray-500 mb-8">Gérez votre profil et votre sécurité.</p>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="bg-white rounded-2xl border border-violet-100 p-6">
-          <h2 className="flex items-center gap-2 text-lg font-bold text-gray-800 mb-5">
-            <User className="w-5 h-5 text-violet-600" /> Profil
+          <h2 className="flex items-center gap-2 text-lg font-bold text-gray-500 mb-5">
+            <User className="w-5 h-5 text-violet-500" /> Profil
           </h2>
 
           <div className="space-y-4">
@@ -151,13 +155,31 @@ export default function SettingsPage() {
                 className="w-full px-4 py-2.5 rounded-xl bg-violet-50 outline-none text-sm text-gray-900 placeholder-gray-400"
               />
             </div>
+            <div>
+              <label className="block text-xs font-semibold text-gray-500 mb-1.5">INSTAGRAM</label>
+              <input
+                value={instagram}
+                onChange={(e) => setInstagram(e.target.value)}
+                placeholder="@votre_instagram"
+                className="w-full px-4 py-2.5 rounded-xl bg-violet-50 outline-none text-sm text-gray-900 placeholder-gray-400"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-semibold text-gray-500 mb-1.5">TELEGRAM</label>
+              <input
+                value={telegram}
+                onChange={(e) => setTelegram(e.target.value)}
+                placeholder="@votre_telegram"
+                className="w-full px-4 py-2.5 rounded-xl bg-violet-50 outline-none text-sm text-gray-900 placeholder-gray-400"
+              />
+            </div>
 
-            {profileMsg && <p className="text-sm text-violet-600">{profileMsg}</p>}
+            {profileMsg && <p className="text-sm text-violet-500">{profileMsg}</p>}
 
             <button
               onClick={handleProfileSave}
               disabled={savingProfile}
-              className="flex items-center gap-2 bg-violet-700 hover:bg-violet-800 disabled:opacity-60 text-white font-medium px-5 py-2.5 rounded-xl transition"
+              className="flex items-center gap-2 bg-violet-500 hover:bg-violet-600 disabled:opacity-60 text-white font-medium px-5 py-2.5 rounded-xl transition"
             >
               <Save className="w-4 h-4" /> {savingProfile ? 'Enregistrement...' : 'Enregistrer'}
             </button>
@@ -166,8 +188,8 @@ export default function SettingsPage() {
 
         <div className="space-y-6">
           <div className="bg-white rounded-2xl border border-violet-100 p-6">
-            <h2 className="flex items-center gap-2 text-lg font-bold text-gray-800 mb-5">
-              <Mail className="w-5 h-5 text-violet-600" /> Email
+            <h2 className="flex items-center gap-2 text-lg font-bold text-gray-500 mb-5">
+              <Mail className="w-5 h-5 text-violet-500" /> Email
             </h2>
 
             <div className="space-y-4">
@@ -191,7 +213,7 @@ export default function SettingsPage() {
                 <button
                   onClick={handleEmailChange}
                   disabled={savingEmail || !newEmail || !emailPassword}
-                  className="text-sm bg-violet-700 hover:bg-violet-800 disabled:opacity-60 text-white font-medium px-4 py-2 rounded-lg transition"
+                  className="text-sm bg-violet-500 hover:bg-violet-600  text-white font-medium px-4 py-2 rounded-lg transition"
                 >
                   {savingEmail ? 'Mise à jour...' : "Changer l'email"}
                 </button>
@@ -212,20 +234,20 @@ export default function SettingsPage() {
                 <button
                   onClick={handleRecoveryEmailSave}
                   disabled={savingRecovery}
-                  className="text-sm bg-white border border-violet-200 hover:bg-violet-50 disabled:opacity-60 text-violet-700 font-medium px-4 py-2 rounded-lg transition"
+                  className="text-sm bg-violet-500 border border-violet-200 hover:bg-violet-50 disabled:opacity-60 text-white font-medium px-4 py-2 rounded-lg transition"
                 >
                   {savingRecovery ? 'Enregistrement...' : 'Enregistrer'}
                 </button>
                 {(emailMsg || recoveryMsg) && (
-                  <p className="text-sm text-violet-600 mt-2">{emailMsg || recoveryMsg}</p>
+                  <p className="text-sm text-violet-500 mt-2">{emailMsg || recoveryMsg}</p>
                 )}
               </div>
             </div>
           </div>
 
           <div className="bg-white rounded-2xl border border-violet-100 p-6">
-            <h2 className="flex items-center gap-2 text-lg font-bold text-gray-800 mb-5">
-              <Lock className="w-5 h-5 text-violet-600" /> Sécurité
+            <h2 className="flex items-center gap-2 text-lg font-bold text-gray-500 mb-5">
+              <Lock className="w-5 h-5 text-violet-500" /> Sécurité
             </h2>
 
             <div className="space-y-4">
@@ -258,12 +280,12 @@ export default function SettingsPage() {
               </div>
 
               {passwordErr && <p className="text-sm text-red-600">{passwordErr}</p>}
-              {passwordMsg && <p className="text-sm text-violet-600">{passwordMsg}</p>}
+              {passwordMsg && <p className="text-sm text-violet-500">{passwordMsg}</p>}
 
               <button
                 onClick={handlePasswordSave}
                 disabled={savingPassword}
-                className="flex items-center gap-2 bg-violet-700 hover:bg-violet-800 disabled:opacity-60 text-white font-medium px-5 py-2.5 rounded-xl transition"
+                className="flex items-center gap-2 bg-violet-500 hover:bg-violet-800 disabled:opacity-60 text-white font-medium px-5 py-2.5 rounded-xl transition"
               >
                 <Save className="w-4 h-4" /> {savingPassword ? 'Enregistrement...' : 'Changer le mot de passe'}
               </button>
