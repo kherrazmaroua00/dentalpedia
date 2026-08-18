@@ -12,7 +12,7 @@ const pageviewsRoutes = require('./routes/pageviews.routes');
 
 const app = express();
 
-
+app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
 
@@ -22,7 +22,7 @@ app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/modules', modulesRoutes);
 app.use('/api/videos', videosRoutes);
 app.use('/api/pageviews', pageviewsRoutes);
-app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
+
 
 app.get('/', (req, res) => {
   res.json({ message: 'Dentalpedia API is running' });
